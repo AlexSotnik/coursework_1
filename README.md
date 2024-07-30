@@ -20,7 +20,7 @@ excel-отчеты и предоставляет другие сервисы:
 
 1. Клонируйте репозиторий:
 ```
-git clone https://github.com/AlexSotnik/home_work/pull/1
+git clone https://github.com/AlexSotnik/coursework_1/pull/1
 ```
 2. Установите зависимости:
 ```
