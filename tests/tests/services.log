@@ -1,6 +1,0 @@
-2024-08-05 23:26:01,971 INFO: Start
-2024-08-05 23:26:01,971 INFO: Creating filtered transactions list
-2024-08-05 23:26:01,971 INFO: Filtering transactions by date and putting their sum into filtered transactions list
-2024-08-05 23:26:01,972 INFO: Calculating remaining sum for investment bank
-2024-08-05 23:26:01,972 INFO: Creating json-file with sum for investment bank
-2024-08-05 23:26:01,972 INFO: Stop
