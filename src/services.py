@@ -18,9 +18,7 @@ def investment_bank(month: str, transactions: List[Dict[str, Any]], limit: int) 
     logger.info("Creating filtered transactions list")
     transactions_list = []
     investment_bank_sum = 0
-    logger.info(
-        "Filtering transactions by date and putting their sum into filtered transactions list"
-    )
+    logger.info("Filtering transactions by date and putting their sum into filtered transactions list")
     for transaction in transactions:
         transaction_date = transaction["operation_date"]
         payment_date = datetime.datetime.strptime(transaction_date, "%d.%m.%Y %H:%M:%S")
@@ -39,6 +37,7 @@ def investment_bank(month: str, transactions: List[Dict[str, Any]], limit: int) 
     result_list_jsons = json.dumps(result_list)
     logger.info("Stop")
     return result_list_jsons
+
 
 # transactions = get_xlsx_data_dict("../data/operations.xlsx")
 # result = investment_bank("2021-12", transactions, 50)

@@ -13,7 +13,7 @@ load_dotenv()
 api_key = os.getenv("API_KEY")
 
 
-def get_xlsx_data_dict(file_name: str) -> List[Dict]:
+def get_xlsx_data_dict(file_name: str) -> List[Dict] | str:
     """Считывает данные о финансовых операциях из excel файла и преобразует их в список словарей"""
     try:
         xlsx_data = pd.read_excel(file_name)
@@ -47,9 +47,11 @@ def get_xlsx_data_dict(file_name: str) -> List[Dict]:
     except Exception:
         return "File can't be read"
 
+
 # if __name__ == "__main__":
 #     result = get_xlsx_data_dict("../data/operations_1.xlsx")
 #     print(result)
+
 
 def get_greeting(time_data: str) -> str:
     """Принимает текущее время и возвращает приветствие в зависимости от времени суток"""
@@ -87,27 +89,23 @@ def get_card_number_list(transactions: List[dict]) -> list:
     return card_list_short
 
 
-def get_operations_sum(time_data: str, transactions: List[Dict[str, Any]], card_number: str) -> float:
+def get_operations_sum(time_data: str, transactions: List[Dict[str, Any]], card_number: str) -> Any | float:
     """Выводит общую сумму расходов по номеру карты в формате *1234"""
     month = time_data[5:7] + "." + time_data[:4]
     transactions_sum_list = []
     for transaction in transactions:
         date = str(transaction["payment_date"])
-        if (
-                transaction["card_number"] == card_number
-                and date[3:] == month
-                and transaction["payment_sum"] < 0
-        ):
+        if transaction["card_number"] == card_number and date[3:] == month and transaction["payment_sum"] < 0:
             transactions_sum_list.append(transaction["payment_sum"])
     total_operations_sum = abs(sum(transactions_sum_list))
     return total_operations_sum
 
 
-transactions = get_xlsx_data_dict('../data/operations.xlsx')
-card_number_list = get_card_number_list(transactions)
-print(card_number_list)
-december_date = "2021-12-03"
-card_4556 = get_operations_sum(december_date, transactions, "*4556")
+# transactions = get_xlsx_data_dict('../data/operations.xlsx')
+# card_number_list = get_card_number_list(transactions)
+# print(card_number_list)
+# december_date = "2021-12-03"
+# card_4556 = get_operations_sum(december_date, transactions, "*4556")
 
 
 def get_cashback_sum(operations_sum: float) -> float:
@@ -178,15 +176,15 @@ def fetch_and_show_currency_rates() -> List[Dict[str, Any]]:
     """Выводит курс валют и записывает из в файл .json"""
     try:
         url = "https://www.cbr-xml-daily.ru/daily_json.js"
-#        payload = {}
+        #        payload = {}
         headers = {"apikey": api_key}
         response = requests.get(url, headers=headers)
         print(response)
         result = response.json()
         print(result)
         exchange_rates_list = []
-        usd_rate = {"currency": "USD", "rate": round(result['Valute']['USD']['Value'], 2)}
-        eur_rate = {"currency": "EUR", "rate": round(result['Valute']['EUR']['Value'], 2)}
+        usd_rate = {"currency": "USD", "rate": round(result["Valute"]["USD"]["Value"], 2)}
+        eur_rate = {"currency": "EUR", "rate": round(result["Valute"]["EUR"]["Value"], 2)}
         exchange_rates_list.append(usd_rate)
         exchange_rates_list.append(eur_rate)
         with open("user_settings.json", "w") as f:
